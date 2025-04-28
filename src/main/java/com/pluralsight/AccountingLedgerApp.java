@@ -8,14 +8,16 @@ import java.util.Scanner;
 public class AccountingLedgerApp {
     public static void main(String[] args) {
 
+        //Used to get user input
         Scanner userInput = new Scanner(System.in);
+        //Controls the main loop
         boolean appOn = true;
 
         System.out.println(" Welcome to the Accounting Ledger App!");
 
         //Keeps loop going while appOn is true
         while (appOn) {
-            //Method
+            //Method to display home menu
             printHomeMenu();
             System.out.println("Enter your choice: ");
             //Takes user input trims it and makes it upper case in variable userChoice
@@ -24,22 +26,23 @@ public class AccountingLedgerApp {
             //Based off userInput calls the right method
             switch (userChoice) {
                 case "D":
-                    addDeposit(userInput);
+                    addDeposit(userInput); //Adds a deposit
                     break;
                 case "P":
-                    addPayment(userInput);
+                    addPayment(userInput); //Adds a payment
                     break;
                 case "L":
-                    showLedger(userInput);
+                    showLedger(userInput); //Displays the ledger
                     break;
                 case "X":
-                    appOn = false;
+                    appOn = false; //Exits the app
                     System.out.println("Goodbye!");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
+        //Closes scanner
         userInput.close();
 
     }
@@ -52,7 +55,7 @@ public class AccountingLedgerApp {
         System.out.println("L) Ledger");
         System.out.println("X) Exit\n");
     }
-    //Method to add deposit
+    //Method to add deposit using userInput from scanner
     private static void addDeposit(Scanner userInput) {
 
         try {
@@ -150,7 +153,7 @@ public class AccountingLedgerApp {
     private static void showLedger (Scanner userInput) {
         System.out.println("\n=== Ledger ===\n");
 
-        //
+        //Loads all transactions
         List<Transaction> transactions = TransactionManager.loadTransactions();
 
         //Using .isEmpty List method to check if the list empty and prints out message.
@@ -159,11 +162,12 @@ public class AccountingLedgerApp {
             System.out.println("No transactions found.");
             return;
         }
-        //Using Sort method on transactions to sort newest first using lambda operator (->)
+        //Using Sort method on transactions to sort newest first then time using lambda operator (->)
         transactions.sort((t1, t2) -> {
             //Compares dates of the transactions
             int compareDate = t2.getDate().compareTo(t1.getDate());
-            //If dates are different then return results
+            //If dates are different then return results (! = not)
+            //If compareDate is not 0 the dates are different
             if (compareDate != 0) {
                 return compareDate;
               //If dates are the same then compare times
@@ -171,7 +175,7 @@ public class AccountingLedgerApp {
                 return t2.getTime().compareTo(t1.getTime());
             }
         });
-            //Prints out the formated ledger. (the variables are left aligned by - on the left of the #,
+            //Prints out the formated ledger header. (the variables are left aligned by - on the left of the #,
             // given char spaces provide by #,
             // and the s stands for string. %n is a platform independent new line)
             System.out.printf("%-12s %-20s %-30s %-20s %-10s%n", "Date", "Time", "Description", "Vendor", "Amount");

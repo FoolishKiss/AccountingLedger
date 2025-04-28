@@ -60,7 +60,7 @@ public class Transaction {
         return new Transaction(date, time, description, vendor, amount);
     }
 
-    //Convert a transaction to a CSV line
+    //Convert a transaction to a CSV line.
     public String toCSV() {
         return date.toString() + "|" + time.toString() + "|" + description + "|" + vendor + "|" +amount;
     }
