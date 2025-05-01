@@ -1,7 +1,5 @@
 package com.pluralsight;
 
-import javax.imageio.IIOException;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,16 +10,17 @@ import java.util.List;
 
 public class TransactionManager {
 
+    //Constant variable that holds the file the app reads from and writes to
     private static final  String FILE_PATH = "transaction.csv";
 
-    //Method to load all transactions into a list called Transaction
+    //Method reads from the file and gives a list of all transactions
     public static List<Transaction> loadTransactions() {
         //Creates an empty list to store transaction objects
         List<Transaction> transactions = new ArrayList<>();
         try {
-            //Read all the lines and stores them as strings in a list
+            //Read all the lines from the file
             List<String> lines = Files.readAllLines(Paths.get(FILE_PATH));
-            //Every line is parsed into a Transaction using fromCSV method then added to transactions list
+            //Loops through every line and is parsed into a Transaction using fromCSV method then added to transactions list
             for (String line : lines) {
                 Transaction t = Transaction.fromCSV(line);
                 transactions.add(t);
